@@ -1,11 +1,12 @@
 pipeline {
     agent {
         node {
-            label 'docker-agent-alphine'
-            }
-
-      }
-   triggers { pollSCM '*/5 * * * *' }
+            label 'docker-agent-alpine'
+        }
+    }
+    triggers {
+        pollSCM '*/5 * * * *'
+    }
     stages {
         stage('Build') {
             steps {
@@ -34,16 +35,17 @@ pipeline {
     }
 
     post {
-            success {
-                emailext subject: 'CI/CD Pipeline Notification',
-                          body: 'Your build was successful! ✨ 🍰 ✨',
-                          to: 'zenerbogyah7@gmail.com',
-                          attachLog: true
-            }
-            failure {
-                emailext subject: 'CI/CD Pipeline Notification. ',
-                          body: 'Your build failed. Please investigate.❌ ❌ ❌ ',
-                          attachLog: true,
-                          to: 'zenerbogyah7@gmail.com'
-            }
+        success {
+            emailext subject: 'CI/CD Pipeline Notification',
+                      body: 'Your build was successful! ✨ 🍰 ✨',
+                      to: 'zenerbogyah7@gmail.com',
+                      attachLog: true
+        }
+        failure {
+            emailext subject: 'CI/CD Pipeline Notification',
+                      body: 'Your build failed. Please investigate.❌ ❌ ❌',
+                      attachLog: true,
+                      to: 'zenerbogyah7@gmail.com'
+        }
+    }
 }
