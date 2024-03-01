@@ -32,6 +32,20 @@ pipeline {
                 '''
             }
         }
+         stage("CleanUp"){
+                    when {
+                        anyOf {
+                            branch 'dev';
+                            branch 'staging';
+                        }
+                    }
+                    steps{
+                        sh 'docker rmi zena07/blogstar:latest'
+                        sh "docker logout"
+                        cleanWs()
+                        }
+                    }
+                }
     }
 
     post {
