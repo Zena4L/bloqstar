@@ -24,6 +24,18 @@ pipeline {
                 '''
             }
         }
+        stage('Push Docker Image to Registry') {
+                when {
+                        anyOf {
+                            branch 'staging';
+                            branch 'dev';
+                        }
+                    }
+                steps {
+                    sh 'docker push zena07/blogstar:latest'
+
+                }
+            }
         stage('Deliver') {
             steps {
                 echo 'Deliver....'
